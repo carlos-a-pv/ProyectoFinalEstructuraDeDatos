@@ -24,6 +24,8 @@ public class PrincipalViewController {
     @FXML
     private Button btnAddTask;
     @FXML
+    private Button btnBuscar;
+    @FXML
     private Pane contentMain;
     private double proccessCurrentY = 0;
     private double activiesCurrentY = 0;
@@ -45,6 +47,13 @@ public class PrincipalViewController {
         view1.setFitWidth(30);
         view1.setPreserveRatio(true);
 
+        Image img2 = new Image("/resources/buscar.png");
+        ImageView view2 = new ImageView(img2);
+        view2.setFitHeight(20);
+        view2.setFitWidth(20);
+        view2.setPreserveRatio(true);
+
+        btnBuscar.setGraphic(view2);
         btnAddActivity.setGraphic(view);
         btnAddTask.setGraphic(view1);
 
