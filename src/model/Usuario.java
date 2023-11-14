@@ -38,8 +38,6 @@ public class Usuario {
         this.rol = rol;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

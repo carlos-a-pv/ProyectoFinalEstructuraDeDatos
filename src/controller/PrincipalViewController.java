@@ -1,13 +1,24 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import model.Rol;
+
+import java.io.IOException;
+
+import static controller.AppController.INSTANCE;
 
 public class PrincipalViewController {
 
@@ -25,6 +36,10 @@ public class PrincipalViewController {
     private Button btnAddTask;
     @FXML
     private Button btnBuscar;
+    @FXML
+    private Button btnLogout;
+    @FXML
+    private Button btnCrearUsuario;
     @FXML
     private Pane contentMain;
     private double proccessCurrentY = 0;
@@ -138,8 +153,16 @@ public class PrincipalViewController {
 
     }
 
-    public void onClickAddTask() {
+    public void onClickAddTask() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/crear-tarea.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 350);
+        Stage stage = new Stage();
+        stage.setTitle("CREAR TAREA");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
 
+/*
         HBox hbox = new HBox();
         Label tarea = new Label("Tarea");
         Button btnEdit, btnRemove;
@@ -184,6 +207,41 @@ public class PrincipalViewController {
         levelTask.setOnMouseClicked( (event) -> {
             tarea.setStyle("-fx-font-family: 'SimSun'; -fx-font-size: 20; -fx-text-fill: #1397D4");
             levelTask.setDisable(true);
-        });
+        });*/
+    }
+
+    public void onClickCrearUsuario( ) throws IOException {
+
+        if(INSTANCE.getModel().getUsuarioLogeado().getRol().equals(Rol.ADMINISTRADOR)){
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/crear-usuario.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 350);
+            Stage stage = new Stage();
+            stage.setTitle("CREAR USUARIO");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        }else{
+            mostrarMensaje("Error", "Permiso denegado", "No tienes rol de administrador", Alert.AlertType.WARNING);
+        }
+    }
+
+    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
+        Alert aler = new Alert(alertType);
+        aler.setTitle(titulo);
+        aler.setHeaderText(header);
+        aler.setContentText(contenido);
+        aler.showAndWait();
+    }
+
+    public void onClickCerrarSesion() throws IOException {
+        INSTANCE.getModel().setUsuarioLogeado(null);
+        FXMLLoader fxmlLoader = new FXMLLoader(PrincipalViewController.class.getResource("/view/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 760);
+        Stage stage = new Stage();
+        stage.setTitle("USUARIO");
+        stage.setScene(scene);
+        stage.initOwner(btnLogout.getScene().getWindow());
+        btnLogout.getScene().getWindow().hide();
+        stage.show();
     }
 }

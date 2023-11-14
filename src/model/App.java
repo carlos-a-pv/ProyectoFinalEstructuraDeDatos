@@ -8,11 +8,18 @@ import java.util.function.Predicate;
 public class App {
 
     private ListaSimple listaProcesos;
-    private ListaSimple listaUsuarios;
+    private ListaSimple<Usuario> listaUsuarios;
+
+    private Usuario usuarioLogeado;
+
+    private Proceso procesoSeleccionado;
+    private Actividad actividadSeleccionada;
 
     public App() {
         this.listaProcesos = new ListaSimple<>();
         this.listaUsuarios = new ListaSimple<>();
+
+        listaUsuarios.agregarFinal(new Usuario("carlos","123", Rol.ADMINISTRADOR));
     }
 
     public Usuario iniciarSesion(Usuario usuario) throws Exception {
@@ -81,37 +88,15 @@ public class App {
     }
 
     public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
-        // Verificar si la lista de usuarios es null
-        if (listaUsuarios == null) {
-            System.out.println("Error: la lista de usuarios es null");
-            return null;
-        }
-
-        // Definir una clase interna para la comparación
-        class UsuarioComparator implements Predicate<Usuario> {
-            @Override
-            public boolean test(Usuario usuario) {
-                return usuario != null && usuario.getUserId().equals(userId);
+        Usuario newUser = new Usuario(userId, password, rol);
+        Usuario user;
+        for (int i = 0; i < listaUsuarios.getTamano(); i++) {
+            user = (Usuario) listaUsuarios.getNode(i).getValorNodo();
+            if(user.getUserId().equals(userId)){
+                return null;
             }
         }
-
-        // Crear un objeto de la clase interna
-        UsuarioComparator usuarioComparator = new UsuarioComparator();
-
-        // Buscar si ya existe un usuario con el mismo userId
-        Nodo<Usuario> nodoUsuario = listaUsuarios.buscarNodo(usuarioComparator);
-
-        if (nodoUsuario != null) {
-            // Ya existe un usuario con el mismo userId
-            System.out.println("Ya existe un usuario con el mismo userId: " + nodoUsuario.getValorNodo().getUserId() + ". No se puede crear la cuenta.");
-            return null;
-        }
-
-        // No existe un usuario con el mismo userId, crear y agregar a la lista
-        Usuario nuevoUsuario = new Usuario(userId, password, rol);
-        listaUsuarios.agregarFinal(nuevoUsuario);
-        System.out.println("Usuario creado con éxito: " + nuevoUsuario.getUserId());
-        return nuevoUsuario;
+        return newUser;
     }
 
 
@@ -139,4 +124,27 @@ public class App {
     }
 
 
+    public Usuario getUsuarioLogeado() {
+        return usuarioLogeado;
+    }
+
+    public void setUsuarioLogeado(Usuario usuarioLogeado) {
+        this.usuarioLogeado = usuarioLogeado;
+    }
+
+    public Proceso getProcesoSeleccionado() {
+        return procesoSeleccionado;
+    }
+
+    public void setProcesoSeleccionado(Proceso procesoSeleccionado) {
+        this.procesoSeleccionado = procesoSeleccionado;
+    }
+
+    public Actividad getActividadSeleccionada() {
+        return actividadSeleccionada;
+    }
+
+    public void setActividadSeleccionada(Actividad actividadSeleccionada) {
+        this.actividadSeleccionada = actividadSeleccionada;
+    }
 }

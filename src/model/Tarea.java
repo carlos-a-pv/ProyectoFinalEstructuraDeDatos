@@ -7,11 +7,11 @@ import java.util.Objects;
 public class Tarea {
     private String nombre;
     private String descripcion;
-    private boolean obligatoriedad;
+    private Obligatoriedad obligatoriedad;
 
     Cola<Tarea> cola = new Cola<>();
 
-    public Tarea(String nombre, String descripcion, boolean obligatoriedad) {
+    public Tarea(String nombre, String descripcion, Obligatoriedad obligatoriedad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.obligatoriedad = obligatoriedad;
@@ -70,11 +70,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public boolean isObligatoriedad() {
+    public Obligatoriedad isObligatoriedad() {
         return obligatoriedad;
     }
 
-    public void setObligatoriedad(boolean obligatoriedad) {
+    public void setObligatoriedad(Obligatoriedad obligatoriedad) {
         this.obligatoriedad = obligatoriedad;
     }
 

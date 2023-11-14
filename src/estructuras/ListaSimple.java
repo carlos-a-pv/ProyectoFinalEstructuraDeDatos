@@ -214,4 +214,33 @@ public class ListaSimple<T> implements Iterable<T>{
                 nodoUltimo + tamano +
                 '}';
     }
+
+    public Nodo getNode(int i){
+        if(i == 0){
+            return nodoPrimero;
+        }else{
+            Nodo aux = null;
+            int cont = 0;
+
+            if(isIndexValid(i)){
+                aux = nodoPrimero;
+                while (cont < i){
+                    aux = aux.getSiguienteNodo();
+                    cont++;
+                }
+            }
+            if(aux != null){
+                return aux;
+            }else{
+                return null;
+            }
+        }
+    }
+
+    private boolean isIndexValid(int i) {
+        if( i >= 0 && i <= tamano ) {
+            return true;
+        }
+        throw new RuntimeException("Índice no válido");
+    }
 }

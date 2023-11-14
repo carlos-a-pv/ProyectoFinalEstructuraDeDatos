@@ -77,7 +77,12 @@
             <Font name="SimSun" size="30.0" />
          </font>
       </Label>
-      <Button layoutX="1248.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="LOGOUT" textFill="#1397d4">
+      <Button fx:id="btnLogout" layoutX="1248.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClickCerrarSesion" prefHeight="32.0" prefWidth="78.0" style="-fx-background-color: #ffffff;" text="LOGOUT" textFill="#1397d4">
+         <font>
+            <Font name="SimSun" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCrearUsuario" layoutX="1091.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClickCrearUsuario" prefHeight="32.0" prefWidth="142.0" style="-fx-background-color: #FFFFFF;" text="CREAR USUARIO" textFill="#1397d4">
          <font>
             <Font name="SimSun" size="18.0" />
          </font>
